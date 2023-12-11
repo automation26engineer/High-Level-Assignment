@@ -1,0 +1,48 @@
+void main() {
+
+testWidgets('Test if AppBar is rendered', (WidgetTester tester) async {
+  await tester.pumpWidget(MyApp());
+  expect(find.byType(AppBar), findsOneWidget);
+});
+
+
+testWidgets('Test navigation to second screen', (WidgetTester tester) async {
+  await tester.pumpWidget(MyApp());
+  await tester.tap(find.byType(RaisedButton)); 
+  await tester.pumpAndSettle(); 
+  expect(find.text('Second Screen'), findsOneWidget);
+});
+
+
+testWidgets('Test API call and widget rendering', (WidgetTester tester) async {
+ 
+  when(mockApi.fetchData()).thenAnswer((_) async => ApiResponse(data: 'Test'));
+
+  await tester.pumpWidget(MyApp(api: mockApi));
+  await tester.pump();
+
+  expect(find.text('Test'), findsOneWidget);
+});
+
+
+testWidgets('Test counter increment', (WidgetTester tester) async {
+  await tester.pumpWidget(MyApp());
+  expect(find.text('0'), findsOneWidget);
+
+  await tester.tap(find.byType(FloatingActionButton));
+  await tester.pump(); 
+
+  expect(find.text('1'), findsOneWidget);
+});
+
+
+testWidgets('Test form validation', (WidgetTester tester) async {
+  await tester.pumpWidget(MyApp());
+  await tester.enterText(find.byType(TextField), 'test123@gmail.com');
+  await tester.tap(find.text('Submit'));
+
+  await tester.pump();
+  expect(find.text('Invalid email'), findsNothing);
+});
+
+}
