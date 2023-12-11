@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:our_app/main.dart'; 
+
+void main() {
+
+  testWidgets('Test Case 1 - Initial Widget Rendering', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+
+    expect(find.byKey(Key('icon_0')), findsOneWidget);
+    expect(find.byKey(Key('icon_1')), findsOneWidget);
+    expect(find.byKey(Key('icon_2')), findsOneWidget);
+
+    await tester.tap(find.byKey(Key('icon_0')));
+    expect(find.text('Added to favourites.'), findsOneWidget);
+    await tester.tap(find.byKey(Key('icon_1')));
+    expect(find.text('Added to favourites.'), findsOneWidget);
+    await tester.tap(find.byKey(Key('icon_2')));
+    expect(find.text('Added to favourites.'), findsOneWidget);
+  });
+
+  testWidgets('Test Case 2 - Favourites Navigation', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+
+    await tester.tap(find.byKey(Key('favourites_button')));
+    await tester.pump();
+
+    expect(find.text('Favourites Section'), findsOneWidget);
+  });
+
+  testWidgets('Test Case 3 - Removing from Favourites', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+    await tester.tap(find.byKey(Key('remove_icon_0')));
+    expect(find.text('Removed from favourites.'), findsOneWidget);
+    await tester.tap(find.byKey(Key('remove_icon_1')));
+    expect(find.text('Removed from favourites.'), findsOneWidget);
+    await tester.tap(find.byKey(Key('remove_icon_2')));
+    expect(find.text('Removed from favourites.'), findsOneWidget);
+  });
+
+}
