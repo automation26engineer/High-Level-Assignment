@@ -10,6 +10,7 @@ meta: ^1.10.0
 platform: ^3.1.2
 process: ^5.0.0
 sdk: flutter
+test: ^1.22.0
 stack_trace: ^1.11.1
 stream_channel: ^2.1.2
 sync_http: ^0.3.1
